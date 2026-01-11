@@ -1,19 +1,22 @@
 # Ganbreeder
 
-[Ganbreeder](https://ganbreeder.app) is a collaborative art tool for discovering images. Images are 'bred' by having children, mixing with other images and being shared via their URL. This is an experiment in using breeding + sharing as methods of exploring high complexity spaces. GAN's are simply the engine enabling this. Ganbreeder is very similar to, and named after, Picbreeder. It is also inspired by an earlier project of mine [Facebook Graffiti](http://www.joelsimon.net/facebook-graffiti.html) which demonstrated the creative capacity of crowds.Ganbreeder uses [these](https://tfhub.dev/deepmind/biggan-128/2) models.
+> [Ganbreeder](https://ganbreeder.app) is a collaborative art tool for discovering images. Images are 'bred' by having children, mixing with other images and being shared via their URL. This is an experiment in using breeding + sharing as methods of exploring high complexity spaces. GAN's are simply the engine enabling this. Ganbreeder is very similar to, and named after, Picbreeder. It is also inspired by an earlier project of mine [Facebook Graffiti](http://www.joelsimon.net/facebook-graffiti.html) which demonstrated the creative capacity of crowds. Ganbreeder uses [these](https://tfhub.dev/deepmind/biggan-128/2) models.
 
-This code was made in a weekend and hasn't been cleaned up or documented yet. There are also improvements to make to scalability.
+> This code was made in a weekend and hasn't been cleaned up or documented yet. There are also improvements to make to scalability.
 
-Pull request are more than welcome :)
+this repo has the changes to make it work for me in 2026. 
 
 ## How to use
 
 ### Prerequisites
-* Install Python 3 + pip (for the GAN server)
+* Install Python 3.7 + pip (for the GAN server)
 * Install NodeJS + npm (for the frontend)
 * Install a PostgreSQL server
 
 ### Launch the GAN server
+
+do this on a venv okay? easiest way is with [uv](https://docs.astral.sh/uv/getting-started/installation/): ```uv venv --python 3.7```
+
 ```bash
 cd gan_server
 # Install dependencies
@@ -30,7 +33,7 @@ docker run -p 5432:5432 --name ganbreederpostgres -e POSTGRES_PASSWORD=ganbreede
 ```
 With that simple scenario, the database and user would be `postgres` and the password would be `ganbreederpostgres`
 
-Copy the file `server/example_secrets.js` to `secrets.js` and modify it to fit your environment.
+Copy the file `server/example_secrets.js` to `secrets.js` and modify it to fit your environment. <- this means adding ```database```, ```user``` and ```password``` to that thangg. and possibly other things, but again, we're running things locally and security is irrelevant.
 
 ### Launch the frontend
 ```bash
@@ -47,7 +50,9 @@ node server.js
 ```
 Your frontend is available at http://localhost:8888/
 
-### docker-compose setup
+## docker-compose setup (alternative?)
+
+i couldn't make this work, but i think i just messed up in a very obvious and stupid way. currently this is the _original_ image, using older dependencies and python 3.6. shouldn't make a difference ofc. 
 
 Make sure that [docker](https://docs.docker.com/install/) and [docker-compose](https://docs.docker.com/compose/install/) are installed.
 
