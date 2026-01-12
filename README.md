@@ -46,7 +46,7 @@ uv venv --python 3.7
 ```bash
 cd gan_server
 # Install dependencies
-pip install -r requirements.txt
+uv pip install -r requirements.txt
 # And go...
 python server.py
 ```
