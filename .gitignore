@@ -5,4 +5,4 @@ server/node_modules/
 server/public/img/
 lambda/
 testing.py
-models/
+gan_server/models/

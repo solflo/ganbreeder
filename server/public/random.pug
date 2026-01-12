@@ -1,9 +1,6 @@
-include partials/google_analytics.pug
-include partials/mailchimp.pug
 doctype html
 html
     head
-        +google-analytics-mixin()
         title Ganbreeder
         meta(charset="utf-8")
         meta(content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport")
@@ -29,28 +26,26 @@ html
             h3 Which image is most interesting?
             br
 
+        .text_container.center
+            p.center #[a(href="/latest") Latest] | #[a(href="/starred") Starred]
+
         .image_container.content
             for key in keys
                 a.imglink(href='/i?k='+key)
                     img(src=root+key+'.jpeg')
 
-        .text_container.center
-            a.center(href='/latest', style='')
-                h4 See what others are selecting
-            p(style='font-size:.8em;').center #{count} images selected.
-
         //- .padding(style='height:20px;width:100%;')
         .text_container
-            p Ganbreeder is a collaborative art tool for discovering images. Images are 'bred' by having children, mixing with other images and being shared via their URL. This is an experiment in using breeding + sharing as methods of exploring high complexity spaces. GAN's are simply the engine enabling this. Ganbreeder is very similar to, and named after, #[a(href='http://picbreeder.org/') Picbreeder]. It is also inspired by an earlier project of mine #[a(href='http://www.joelsimon.net/facebook-graffiti.html') Facebook Graffiti] which demonstrated the creative capacity of crowds. Ganbreeder uses #[a(href='https://tfhub.dev/deepmind/biggan-128/2') these] BigGAN models and the #[a(href='https://github.com/joel-simon/ganbreeder') source code] is available.
+            p Ganbreeder is a collaborative art tool for discovering images. Images are 'bred' by having children, mixing with other images and being shared via their URL. This is an experiment in using breeding + sharing as methods of exploring high complexity spaces. GANs are simply the engine enabling this. Ganbreeder is very similar to, and named after, #[a(href='http://picbreeder.org/') Picbreeder]. It is also inspired by an earlier project of Joel Simon's, #[a(href='http://www.joelsimon.net/facebook-graffiti.html') Facebook Graffiti], which demonstrated the creative capacity of crowds. 
+            p Ganbreeder uses #[a(href='https://tfhub.dev/deepmind/biggan-128/2') these] BigGAN models and the #[a(href='https://github.com/joel-simon/ganbreeder') source code] is available.
+            p this specific version is a #[a(href="https://github.com/solflo/ganbreeder" ) fork] by #[a(href="https://solflo.neocities.org/") sol], making it overall a little friendlier to run locally with 2026 software. it has a #[a(href="") guide], aimed at people who "know shit about fuck", like themself.
+            hr
 
 
 
         .text_container
-
-            a(href='https://www.joelsimon.net') joelsimon.net
-            br
-            a(href='https://twitter.com/_joelsimon') @joelsimon
-            +mailchimp-mixin()
+            p #[a(href='https://www.joelsimon.net') joelsimon.net] | #[a(href='https://twitter.com/_joelsimon') @joelsimon]
+            p #[a(href="https://solflo.neocities.org/") solflo.neocities.org]
 
 
 

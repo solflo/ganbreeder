@@ -1,4 +1,4 @@
-FROM python:3.6.9-buster
+FROM python:3.7.17
 ADD ./gan_server /gan_server
 WORKDIR /gan_server
 # Install dependencies
