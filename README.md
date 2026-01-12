@@ -32,7 +32,6 @@ docker-compose restart server
 
 ### Prerequisites
 * Install Python 3.7 + pip (for the GAN server)
-* Install Python 3.7 + pip (for the GAN server)
 * Install NodeJS + npm (for the frontend)
 * Install a PostgreSQL server
 
