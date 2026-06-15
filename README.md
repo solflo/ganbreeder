@@ -10,10 +10,11 @@ Download the `Ganbreeder` folder, unzip it, and double-click `Ganbreeder.exe`. A
 
 Your images and history are stored next to the exe in a `data/` folder.
 
-## Under the hood
+## Dependencies used
 
 - **Python + Flask** served by waitress.
-- **PyTorch BigGAN-deep** at 256x256, CPU-only, weights bundled for offline use.
+- **PyTorch BigGAN-deep** at 256x256, CPU-only, no cuda sorry, I'm not packing more 2gb into this.
+    - This is the only dependency that might rot in the future, the packed app comes with the models already downloaded (this is why it's huge), but for development one day this might stop working.
 - **SQLite** for storage (`data/ganbreeder.db`) and plain JPEGs in `data/img/`.
 - Vanilla-JS frontend with Jinja2 templates.
 
