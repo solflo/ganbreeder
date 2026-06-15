@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+    <title>Ganbreeder</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link href="/index.css" rel="stylesheet" media="screen">
+    <style>
+        .centered_image { text-align: center; }
+        .centered_image a {
+            display: inline-block;
+            width: 100%;
+        }
+        img { max-width: 256px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Ganbreeder</h1>
+        <div class="text_container" style="text-align:center;">
+            <a class="center" href="/">Home</a>
+        </div>
+        <h3>Image Lineage</h3>
+    </header>
+
+    <div class="centered_image">
+        <a class="imglink" href="/i?k={{ key }}"><img src="{{ root }}{{ key }}.jpeg"></a>
+        {% for image in parents %}
+        <a class="imglink" href="/i?k={{ image.key }}"><img src="{{ root }}{{ image.key }}.jpeg"></a>
+        {% endfor %}
+    </div>
+
+    <div id="footer"></div>
+</body>
+</html>

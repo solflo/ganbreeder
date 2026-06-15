@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+    <title>Ganbreeder</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link href="/index.css" rel="stylesheet" media="screen">
+    <style>
+        #star img {
+            height: 25px;
+            cursor: pointer;
+        }
+        .text_container.class_labels {
+            max-width: 800px;
+            text-align: left;
+        }
+        .text_container.class_labels p {
+            display: inline;
+            margin-right: 15px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container center">
+            <a class="title" href="/"><h1>Ganbreeder</h1></a>
+        </div>
+    </header>
+    <section>
+        <div class="container top">
+            <div id="links">
+                {% if pkey %}
+                <div class="awrap"><a href="/lineage?k={{ key }}">Lineage</a></div>
+                {% endif %}
+                <div class="awrap"><a href="/mix?parent1={{ key }}">Mix</a></div>
+                <div class="awrap" id="star"><img></div>
+                <div class="awrap"><a href="/starred">Starred</a></div>
+            </div>
+
+            <img class="image" src="{{ root }}{{ key }}.jpeg">
+        </div>
+
+        <div class="image_container" id="loading_container">
+            <img class="loading" src="/image/loading.gif" style="width:50%;">
+            <p>Loading Children</p>
+        </div>
+
+        <div class="image_container content">
+            {% for _ in range(12) %}
+            <a class="imglink"><img></a>
+            {% endfor %}
+        </div>
+
+        <div class="text_container class_labels">
+            {% for i in range(1000) %}
+            {% if label[i] > 0.01 %}<p>{{ label_names[i] }}: {{ '%.2f'|format(label[i] * 100) }}%</p>{% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="text_container center" style="text-align:center;font-size:1.0em;">
+            <p>Share this image via its URL</p>
+            <a href="/info?k={{ key }}">Image Data</a>
+        </div>
+    </section>
+
+    <div id="footer"></div>
+    <script>
+        const key = "{{ key }}";
+        const root = "{{ root }}";
+    </script>
+    <script src="/utils.js"></script>
+    <script src="/image.js"></script>
+</body>
+</html>

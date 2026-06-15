@@ -1,8 +1,8 @@
-modules/
-.ipynb_checkpoints/
-server/secrets.js
-server/node_modules/
-server/public/img/
-lambda/
-testing.py
-gan_server/models/
+.venv/
+__pycache__/
+*.pyc
+
+weights/
+data/
+build/
+dist/

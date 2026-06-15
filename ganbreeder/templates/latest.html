@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+    <title>Ganbreeder</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link href="/index.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Ganbreeder</h1>
+        <div class="text_container" style="text-align:center;">
+            <a class="center" href="/">Home</a>
+        </div>
+        <h3>Recently starred images</h3>
+    </header>
+
+    <div class="image_container content">
+        {% for image in images %}
+        <a class="imglink" href="/i?k={{ image.key }}"><img src="{{ root }}{{ image.key }}.jpeg"></a>
+        {% endfor %}
+    </div>
+
+    <div class="text_container" style="text-align:center;padding:50px;">
+        <a class="center" href="/latest" style="margin-right:20px;">First Page</a>
+        <a class="center" href="/latest?page={{ page + 1 }}">Next Page</a>
+    </div>
+    <div id="footer"></div>
+</body>
+</html>

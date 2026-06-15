@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+    <title>Ganbreeder</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link href="/index.css" rel="stylesheet">
+    <style>
+        .image_container.content {
+            width: 100%;
+            max-width: 100%;
+        }
+        .image_container img { width: 256px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Ganbreeder</h1>
+        <div class="text_container" style="text-align:center;">
+            <a class="center" href="/">Home</a>
+        </div>
+        <h3>Your Starred Images</h3>
+    </header>
+
+    <div class="image_container content"></div>
+    <div id="footer"></div>
+    <script>
+        const root = "{{ root }}";
+    </script>
+    <script src="/starred.js"></script>
+</body>
+</html>

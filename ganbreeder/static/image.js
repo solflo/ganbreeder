@@ -1,14 +1,11 @@
-post_json('/image_children', {key}).then(data => {
-    const children = document.querySelector('.image_container.content')
-    const a = children.getElementsByClassName('imglink')
+post_json('/image_children', { key }).then(data => {
+    const content = document.querySelector('.image_container.content')
+    const thumbs = content.getElementsByClassName('imglink')
     document.getElementById('loading_container').style.display = 'none'
-    if (data.length) {
-        console.assert(data.length == a.length)
-        for (let i = 0; i < data.length; i++) {
-            const key = data[i].key
-            a[i].href = '/i?k='+key
-            a[i].firstElementChild.src = root+key+'.jpeg'
-        }
+    for (let i = 0; i < data.length; i++) {
+        const childKey = data[i].key
+        thumbs[i].href = '/i?k=' + childKey
+        thumbs[i].firstElementChild.src = root + childKey + '.jpeg'
     }
 }).catch(err => {
     console.log({ err })
@@ -25,7 +22,7 @@ star.onclick = (event) => {
         return
     }
     localStorage.setItem(key, new Date().getTime())
-    star.querySelector('img').src = '/image/star_full.png'
+    starimg.src = '/image/star_full.png'
     post('/star', {key}).then(() => {
         console.log('Star success')
     })

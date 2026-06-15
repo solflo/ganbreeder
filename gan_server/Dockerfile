@@ -1,7 +1,0 @@
-FROM python:3.7.17
-ADD ./gan_server /gan_server
-WORKDIR /gan_server
-# Install dependencies
-RUN pip install -r /gan_server/requirements.txt
-# And go...
-CMD ["python", "server.py"]

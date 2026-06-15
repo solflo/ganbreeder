@@ -1,86 +1,34 @@
 # Ganbreeder
 
-> [Ganbreeder](https://ganbreeder.app) is a collaborative art tool for discovering images. Images are 'bred' by having children, mixing with other images and being shared via their URL. This is an experiment in using breeding + sharing as methods of exploring high complexity spaces. GAN's are simply the engine enabling this. Ganbreeder is very similar to, and named after, Picbreeder. It is also inspired by an earlier project of mine [Facebook Graffiti](http://www.joelsimon.net/facebook-graffiti.html) which demonstrated the creative capacity of crowds. Ganbreeder uses [these](https://tfhub.dev/deepmind/biggan-128/2) models.
+> [Ganbreeder](https://ganbreeder.app) is a collaborative art tool for discovering images. Images are 'bred' by having children, mixing with other images and being shared via their URL. This is an experiment in using breeding + sharing as methods of exploring high complexity spaces. GANs are simply the engine enabling this. Ganbreeder is very similar to, and named after, Picbreeder. It is also inspired by an earlier project of Joel Simon's, [Facebook Graffiti](http://www.joelsimon.net/facebook-graffiti.html), which demonstrated the creative capacity of crowds.
 
-> This code was made in a weekend and hasn't been cleaned up or documented yet. There are also improvements to make to scalability.
+This fork rebuilds Ganbreeder as a self-contained desktop app. The BigGAN models are bundled in.
 
-this fork has the changes to make it work for me (sol) in 2026, as well as an edited readme that should be easier to understand and follow. there's also [a guide](https://solflo.neocities.org/etc/ganbreeder/) that's kinda paraphrasing all this.
+## Running the app
 
-## How to use — with docker
+Download the `Ganbreeder` folder, unzip it, and double-click `Ganbreeder.exe`. A console window will open and your browser pops up at the app. The first launch takes a few minutes while it loads a model and generates some starter images; later launches are quick. Close the console window to quit.
 
-well. turns out this is a very easy and straightforward way i should just have tested first instead of struggling. oops.
+Your images and history are stored next to the exe in a `data/` folder.
 
-Make sure that [docker](https://docs.docker.com/install/) and [docker-compose](https://docs.docker.com/compose/install/) are installed.
+## Under the hood
 
-Start the containers:
-```bash
-docker-compose up
-```
-Your frontend is available at http://localhost:8888/, backend at http://localhost:5000/.
-Initial backend setup can take few minutes.
+- **Python + Flask** served by waitress.
+- **PyTorch BigGAN-deep** at 256x256, CPU-only, weights bundled for offline use.
+- **SQLite** for storage (`data/ganbreeder.db`) and plain JPEGs in `data/img/`.
+- Vanilla-JS frontend with Jinja2 templates.
 
-If this is the first time you are running the project you might want to generate some random images:
-```bash
-docker-compose exec server node make_randoms.js
-```
-Restart only frontend server (to avoid backend initialization wait):
-```bash
-docker-compose restart server
-```
+## Developing / building from source
 
-## How to use — manual setup
-
-### Prerequisites
-* Install Python 3.7 + pip (for the GAN server)
-* Install NodeJS + npm (for the frontend)
-* Install a PostgreSQL server
-
-### Launch the GAN server
-
-do this on a venv okay? easiest way is with [uv](https://docs.astral.sh/uv/getting-started/installation/):
+Requires [uv](https://docs.astral.sh/uv/getting-started/installation/).
 
 ```bash
-uv venv --python 3.7
+uv sync
+
+uv run python scripts/fetch_weights.py
+
+uv run python -m ganbreeder
+
+uv run pyinstaller ganbreeder.spec --noconfirm
 ```
 
-```bash
-cd gan_server
-# Install dependencies
-uv pip install -r requirements.txt
-# And go...
-python server.py
-```
-Your GAN server is available at http://localhost:5000/
-
-### Configure the frontend
-For quick hacking, if you have Docker at your disposal, you can spawn a PostgreSQL database like so:
-```bash
-docker run -p 5432:5432 --name ganbreederpostgres -e POSTGRES_PASSWORD=ganbreederpostgres -d postgres
-```
-With that simple scenario, the database and user would be `postgres` and the password would be `ganbreederpostgres`
-
-Copy the file `server/example_secrets.js` to `secrets.js` and modify it to fit your environment:
-
-```js
-connection: {
-    host: "",
-    database: 'postgres',
-    user:     'postgres',
-    password: 'ganbreederpostgres'
-},
-```
-
-### Launch the frontend
-```bash
-cd server
-npm install
-# Create the database structure
-node_modules/knex/bin/cli.js migrate:latest
-# Generate the first images
-node make_randoms.js
-# Generate a cache of image keys for the front page (do it every time you want to update the front page)
-node updatecache.js
-# And go...
-node server.js
-```
-Your frontend is available at http://localhost:8888/
+Original tool by Joel Simon ([joelsimon.net](https://www.joelsimon.net) · [@_joelsimon](https://twitter.com/_joelsimon)). 2026 fork and rework by [sol](https://solflo.neocities.org/) and their friend.
