@@ -6,3 +6,4 @@ weights/
 data/
 build/
 dist/
+dist-linux/

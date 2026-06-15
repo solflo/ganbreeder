@@ -1,0 +1,7 @@
+.venv/
+dist/
+dist-linux/
+build/
+data/
+.git/
+__pycache__/

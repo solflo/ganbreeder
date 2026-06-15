@@ -32,4 +32,17 @@ uv run python -m ganbreeder
 uv run pyinstaller ganbreeder.spec --noconfirm
 ```
 
+The Windows `.exe` is produced by running that last command on Windows.
+
+### Building the Linux package (if you are in windows)
+
+Easiest is via Docker:
+
+```bash
+docker build -f Dockerfile.build --target artifact --output type=local,dest=dist-linux .
+tar czf Ganbreeder-linux.tar.gz -C dist-linux Ganbreeder
+```
+
+This produces `dist-linux/Ganbreeder/Ganbreeder` plus `_internal/`. Users unzip it and run `./Ganbreeder/Ganbreeder` from a terminal. Running the same `uv` commands directly on a Linux machine or WSL2 works too.
+
 Original tool by Joel Simon ([joelsimon.net](https://www.joelsimon.net) · [@_joelsimon](https://twitter.com/_joelsimon)). 2026 fork and rework by [sol](https://solflo.neocities.org/) and their friend.
