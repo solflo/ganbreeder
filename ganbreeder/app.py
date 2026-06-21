@@ -26,6 +26,13 @@ def index():
     return render_template("random.html", keys=db.homepage_keys(), root=ROOT)
 
 
+@app.get("/randombatch")
+def randombatch():
+    ims, vectors, labels = gan.create_random_images(config.SEED_COUNT)
+    store.store(ims, vectors, labels)
+    return render_template("generator.html", keys=db.recent_keys(), root=ROOT)
+
+
 @app.get("/i")
 def image_page():
     key = request.args.get("k")

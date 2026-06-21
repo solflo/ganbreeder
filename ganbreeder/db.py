@@ -113,6 +113,15 @@ def homepage_keys(n=6):
     return [r["key"] for r in raw] + [r["key"] for r in starred]
 
 
+def recent_keys(n=12):
+    with connect() as conn:
+        raw = conn.execute(
+            "SELECT key FROM image WHERE parent1 IS NULL ORDER BY created_at DESC LIMIT ?",
+            (n,),
+        ).fetchall()
+    return [r["key"] for r in raw]
+
+
 def count_images():
     with connect() as conn:
         return conn.execute("SELECT COUNT(*) AS c FROM image").fetchone()["c"]
