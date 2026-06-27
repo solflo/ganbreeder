@@ -146,3 +146,10 @@ a.title h1 {
         margin-right: 20px;
     }
 }
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #222;
+        color: #ccc;
+    }
+}
