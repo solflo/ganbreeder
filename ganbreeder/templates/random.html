@@ -9,13 +9,9 @@
 <body>
     <header>
         <h1><a href='/'>Ganbreeder</a></h1>
-        <h3>Which image is most interesting?</h3>
-        <br>
+        <p>Which image is most interesting?</p>
+        <nav><a href="/latest">Latest</a> | <a href="/starred">Starred</a> | <a href="/create">Create</a> | <a href="/randombatch">Generate new batch</a></nav>
     </header>
-
-    <div class="text_container center">
-        <p class="center"><a href="/latest">Latest</a> | <a href="/starred">Starred</a> | <a href="/create">Create</a> | <a href="/randombatch">Generate new batch</a></p>
-    </div>
 
     <div class="image_container content">
         {% for key in keys %}
@@ -23,17 +19,16 @@
         {% endfor %}
     </div>
 
-    <div class="text_container">
-        <p>Ganbreeder is a collaborative art tool for discovering images. Images are 'bred' by having children, mixing with other images and being shared via their URL. This is an experiment in using breeding + sharing as methods of exploring high complexity spaces. GANs are simply the engine enabling this. Ganbreeder is very similar to, and named after, <a href="http://picbreeder.org/">Picbreeder</a>. It is also inspired by an earlier project of Joel Simon's, <a href="http://www.joelsimon.net/facebook-graffiti.html">Facebook Graffiti</a>, which demonstrated the creative capacity of crowds.</p>
-        <p>Ganbreeder uses DeepMind's BigGAN models, bundled to run fully offline.</p>
-        <hr>
-    </div>
+    <p>Ganbreeder is a collaborative art tool for discovering images. Images are 'bred' by having children, mixing with other images and being shared via their URL. This is an experiment in using breeding + sharing as methods of exploring high complexity spaces. GANs are simply the engine enabling this. Ganbreeder is very similar to, and named after, <a href="http://picbreeder.org/">Picbreeder</a>. It is also inspired by an earlier project of Joel Simon's, <a href="http://www.joelsimon.net/facebook-graffiti.html">Facebook Graffiti</a>, which demonstrated the creative capacity of crowds.</p>
 
-    <div class="text_container">
-        <p><a href="https://www.joelsimon.net">joelsimon.net</a> | <a href="https://twitter.com/_joelsimon">@joelsimon</a></p>
-        <p><a href="https://solflo.neocities.org/">solflo.neocities.org</a></p>
-    </div>
+    <p>Ganbreeder uses DeepMind's BigGAN models, bundled to run fully offline.</p>
 
-    <div id="footer"></div>
+    <hr>
+
+    <p><a href="https://www.joelsimon.net">joelsimon.net</a> | <a href="https://twitter.com/_joelsimon">@joelsimon</a></p>
+    
+    <p><a href="https://solflo.neocities.org/">solflo.neocities.org</a></p>
+
+    
 </body>
 </html>

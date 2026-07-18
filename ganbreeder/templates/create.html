@@ -5,59 +5,15 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link href="/index.css" rel="stylesheet">
-    <style>
-        .gene_editor { max-width: 600px; text-align: left; }
-        .gene_row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 6px 0;
-        }
-        .gene_name { flex: 0 0 200px; }
-        .gene_row input[type=range] { flex: 1; }
-        .gene_weight { flex: 0 0 55px; }
-        .gene_percent { flex: 0 0 55px; text-align: right; color: #888; }
-        .gene_remove {
-            cursor: pointer;
-            border: none;
-            background: none;
-            font-size: 1.2em;
-            line-height: 1;
-        }
-        .combobox { position: relative; display: inline-block; margin: 16px 0; }
-        #label_search { width: 260px; padding: 6px; box-sizing: border-box; }
-        #label_dropdown {
-            position: absolute;
-            left: 0; right: 0; top: 100%;
-            list-style: none;
-            margin: 0; padding: 0;
-            border: 1px solid #ccc;
-            background: #fff;
-            max-height: 240px;
-            overflow-y: auto;
-            z-index: 10;
-        }
-        #label_dropdown li { padding: 6px 10px; cursor: pointer; }
-        #label_dropdown li:hover { background: #eee; }
-        #label_dropdown li[hidden] { display: none; }
-        #generate { padding: 10px 24px; font-size: 1.1em; cursor: pointer; }
-        #generate:disabled { cursor: default; opacity: 0.5; }
-        #result img { width: 256px; height: 256px; }
-        @media (prefers-color-scheme: dark) {
-            #label_dropdown { background: #333; border-color: #555; }
-            #label_dropdown li:hover { background: #444; }
-        }
-    </style>
+    <link href="/gene_editor.css" rel="stylesheet">
 </head>
 <body>
     <header>
         <h1><a href='/'>Ganbreeder</a></h1>
-        <h3>Pick labels and weights to grow an image from scratch</h3>
-        <p class="center"><a href="/latest">Latest</a> | <a href="/starred">Starred</a></p>
-        <br>
+        <p>Pick labels and weights to grow an image from scratch</p>
     </header>
 
-    <div class="text_container gene_editor">
+    <div class="gene_editor">
         <div id="gene_rows"></div>
         <div class="combobox">
             <input id="label_search" placeholder="Search labels..." autocomplete="off">
@@ -67,8 +23,7 @@
                 {% endfor %}
             </ul>
         </div>
-        <br>
-        <button id="generate" disabled>Generate</button>
+        <button class="submit" id="generate" disabled>Generate</button>
     </div>
 
     <template id="gene_row_template">
@@ -77,20 +32,20 @@
             <input class="gene_slider" type="range" min="0" max="1" step="0.01">
             <input class="gene_weight" type="number" min="0" max="100" step="1">
             <span class="gene_percent"></span>
-            <button type="button" class="gene_remove">×</button>
+            <button type="button" class="gene_remove">x</button>
         </div>
     </template>
 
-    <div class="image_container" id="loading_container" style="display:none">
+    <div id="loading_container" style="display:none">
         <img class="loading" src="/image/loading.gif" style="width:50%;">
         <p>Generating</p>
     </div>
 
-    <div class="image_container content" id="result" style="display:none">
-        <a class="imglink"><img class="image"></a>
+    <div id="result" style="display:none">
+        <a class="imglink"><img></a>
     </div>
 
-    <div id="footer"></div>
+    
     <script>
         const key = null;
         const root = "{{ root }}";

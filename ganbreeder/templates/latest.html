@@ -9,7 +9,7 @@
 <body>
     <header>
         <h1><a href='/'>Ganbreeder</a></h1>
-        <h3>Recently starred images</h3>
+        <p>Recently starred images</p>
     </header>
 
     <div class="image_container content">
@@ -18,10 +18,9 @@
         {% endfor %}
     </div>
 
-    <div class="text_container" style="text-align:center;padding:50px;">
-        <a class="center" href="/latest" style="margin-right:20px;">First Page</a>
-        <a class="center" href="/latest?page={{ page + 1 }}">Next Page</a>
+    <div style="text-align:center;padding:50px;">
+        <a href="/latest" style="margin-right:20px; text-align:center;">First Page</a>
+        <a href="/latest?page={{ page + 1 }}" style="text-align:center;">Next Page</a>
     </div>
-    <div id="footer"></div>
 </body>
 </html>

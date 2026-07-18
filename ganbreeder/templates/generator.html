@@ -9,11 +9,8 @@
 <body>
     <header>
         <h1><a href='/'>Ganbreeder</a></h1>
+        <nav><a href="/latest">Latest</a> | <a href="/starred">Starred</a> | <a href="/randombatch">Generate new batch</a></nav>
     </header>
-
-    <div class="text_container center">
-        <p class="center"><a href="/latest">Latest</a> | <a href="/starred">Starred</a> | <a href="/randombatch">Generate new batch</a></p>
-    </div>
 
     <div class="image_container content">
         {% for key in keys %}
@@ -21,6 +18,6 @@
         {% endfor %}
     </div>
 
-    <div id="footer"></div>
+    
 </body>
 </html>

@@ -10,11 +10,13 @@
             height: 25px;
             cursor: pointer;
         }
-        .text_container.class_labels {
+
+        .class_labels {
             max-width: 800px;
             text-align: left;
         }
-        .text_container.class_labels p {
+
+        .class_labels p {
             display: inline;
             margin-right: 15px;
         }
@@ -22,26 +24,18 @@
 </head>
 <body>
     <header>
-        <div class="container center">
-            <a class="title" href="/"><h1>Ganbreeder</h1></a>
-        </div>
+        <a href="/"><h1>Ganbreeder</h1></a>
+        <nav>
+            {% if pkey %}
+            <a href="/lineage?k={{ key }}">Lineage</a> | 
+            {% endif %}
+            <a href="/mix?parent1={{ key }}">Mix</a> | <a href="/edit?k={{ key }}">Edit genes</a> | <div id="star"><img></div> | <a href="/starred">Starred</a>
+        </nav>
     </header>
-    <section>
-        <div class="container top">
-            <div id="links">
-                {% if pkey %}
-                <div class="awrap"><a href="/lineage?k={{ key }}">Lineage</a></div>
-                {% endif %}
-                <div class="awrap"><a href="/mix?parent1={{ key }}">Mix</a></div>
-                <div class="awrap"><a href="/edit?k={{ key }}">Edit genes</a></div>
-                <div class="awrap" id="star"><img></div>
-                <div class="awrap"><a href="/starred">Starred</a></div>
-            </div>
+    <section>           
+        <img id="parent_image" src="{{ root }}{{ key }}.jpeg">
 
-            <img class="image" src="{{ root }}{{ key }}.jpeg">
-        </div>
-
-        <div class="image_container" id="loading_container">
+        <div id="loading_container">
             <img class="loading" src="/image/loading.gif" style="width:50%;">
             <p>Loading Children</p>
         </div>
@@ -52,19 +46,16 @@
             {% endfor %}
         </div>
 
-        <div class="text_container class_labels">
+        <div class="class_labels">
             {% for i in range(1000) %}
             {% if label[i] > 0.01 %}<p>{{ label_names[i] }}: {{ '%.2f'|format(label[i] * 100) }}%</p>{% endif %}
             {% endfor %}
         </div>
 
-        <div class="text_container center" style="text-align:center;font-size:1.0em;">
-            <p>Share this image via its URL</p>
-            <a href="/info?k={{ key }}">Image Data</a>
-        </div>
+        <p style="font-size: 0.8em; padding-top: 0.5em;"><a href="/info?k={{ key }}">Image Data</a></p>
     </section>
 
-    <div id="footer"></div>
+    
     <script>
         const key = "{{ key }}";
         const root = "{{ root }}";

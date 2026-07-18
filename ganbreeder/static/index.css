@@ -1,155 +1,127 @@
-* {
-  font-family: 'Avenir', sans-serif;
-  font-weight: normal;
-}
+/* variables */
 
-header h1,h2,h3 {
-    text-align: center;
-}
-
-.center {
-    text-align: center;
-}
-
-img.image {
-    max-width: 256px;
-}
-
-header h1 {
-    margin-bottom: .0px;
-}
-
-#footer {
-    width: 100%;
-    height: 50px;
-}
-
-/*a.title */
-a.title {
-    color: black;
-    text-decoration: none;
-}
-
-a.title h1 {
-    /* Hacky thinner underline. */
-    display: inline-block;
-    box-shadow: inset 0 -7px 0 white, inset 0 -8px 0 black
-}
-
-#links {
-    text-align: center;
-    font-size: 1.2em;
-    /*position: fixed;*/
-    /*top: 0px;*/
-    /*right: 0px;*/
-    /*margin-lft: 20px;*/
-    /*margin-top: 25px;*/
-}
-
-#links div:last-child {
-    margin-right: 0;
-}
-
-.awrap {
-    /*width: 80px;*/
-    margin-top: 10px;
-    margin-right: 30px;
-    margin-bottom: 20px;
-    display: inline-block;
-}
-
-.awrap#star {
-    position: relative;
-    top: 4px;
-}
-
-#links a {
-    /*float: left;*/
-    /*width: 50px;*/
-    /*margin: 20px;*/
-    color: gray;
-}
-
-.image_container {
-    /*position: relative;*/
-    margin: 0 auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 80%;
-    max-width: 900px;
-    height: 100%;
-    text-align:center;
-}
-
-.image_container img {
-    position: relative;
-    box-sizing: border-box;
-    z-index: 2;
-    width: 23%;
-    margin-left: 3px;
-    margin-right: 3px;
-    cursor: pointer;
-    border: 1px solid white;
-}
-
-.container.top {
-    display: relative;
-    width: 100%;
-    /*height: 120px;*/
-    /*background-color: red;*/
-    text-align:center;
-}
-
-.text_container {
-    color: gray;
-    font-size: 1.2em;
-    margin: 0 auto;
-    width: 80%;
-    max-width: 700px;
-    text-align: justify;
-}
-
-.text_container a {
-    color: gray;
-}
-
-
-.image_container.content img:hover {
-    border: 1px solid black;
-}
-
-@media only screen and (max-width: 700px) {
-    body {
-        margin-left: 0px;
-        margin-right: 0px;
-    }
-    .image_container {
-        max-width: inherit;
-        width: 100%;
-        margin-top: 0px;
-    }
-    .text_container {
-        max-width: inherit;
-        width: 90%;
-    }
-
-    header h1 {
-        font-size: 1.5em;
-    }
-
-    .image_container img {
-        /* Switch to 3-cols and 4 rows */
-        width: 31%;
-    }
-
-    .awrap {
-        margin-right: 20px;
-    }
+:root {
+    --bg: #eee;
+    --text: #111;
+    --accent: grey;
 }
 
 @media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #222;
+        --text: #ccc;
+    }
+}
+
+
+/* css proper */
+
+* {
+    font-weight: normal;
+}
+
+body {
+    color: var(--text);
+    background: var(--bg);
+    font-family: sans-serif;
+    font-size: 14pt;
+    
+    margin: 0 auto;
+    margin-bottom: 2em;
+    max-width: 900px;
+    padding: 1em;
+}
+
+p {
+    text-align: justify;
+    color: var(--accent);
+    margin: 0 auto;
+}
+
+header {
+    color: var(--text);
+    text-align: center;
+}
+
+header p {
+    text-align: inherit;
+}
+
+h1 {
+    font-size: 1.5em;
+}
+
+a,
+a:visited {
+    color: var(--accent);
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 0.5em;
+    padding: 1em;
+}
+
+button.submit {
+    padding: 0.5em 1em;
+    font-size: 1em;
+    cursor: pointer;
+    display: block;
+    margin: 1em auto;
+}
+
+button.submit:disabled {
+    cursor: default;
+    opacity: 0.5;
+}
+
+
+/* image stuff */
+
+.image_container {
+    margin: 1em auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    justify-content: center;
+    gap: 1em;
+}
+
+.image_container img {
+    max-width: 100%;
+    border: 1px solid var(--accent);
+}
+
+.image_container img:hover {
+    border: 1px solid black;
+}
+
+/* this is the main image in a page */
+#parent_image {
+    display: block;
+    margin: 1em auto;
+}
+
+/* what displays before new gen'd images load */
+#loading_container {
+    width: 100%;
+    text-align: center;
+}
+
+
+/* responsive layout */
+
+@media only screen and (max-width: 700px) {
     body {
-        background: #222;
-        color: #ccc;
+        max-width: 100%;
+        font-size: 13pt;
+    }
+    
+    .image_container {
+        /* Switch to 3-cols and 4 rows */
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(4, 1fr);
     }
 }
