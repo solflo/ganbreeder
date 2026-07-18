@@ -1,4 +1,5 @@
 import json
+import math
 
 import numpy as np
 from flask import Flask, abort, jsonify, render_template, request, send_from_directory
@@ -7,6 +8,7 @@ from . import config, db, gan, store
 from .labels import LABELS
 
 ROOT = "/img/"
+SORTED_LABELS = sorted(enumerate(LABELS), key=lambda p: p[1].lower())
 
 app = Flask(
     __name__,
@@ -52,7 +54,69 @@ def info():
     row = key and db.get_by_key(key)
     if not row:
         abort(404)
-    return jsonify({"vector": json.loads(row["vector"]), "label": json.loads(row["label"])})
+    return jsonify(
+        {"vector": json.loads(row["vector"]), "label": json.loads(row["label"])}
+    )
+
+
+@app.get("/create")
+def create_page():
+    return render_template("create.html", label_options=SORTED_LABELS, root=ROOT)
+
+
+@app.get("/edit")
+def edit_page():
+    key = request.args.get("k")
+    row = key and db.get_by_key(key)
+    if not row:
+        abort(404)
+    label = json.loads(row["label"])
+    genes = {i: v for i, v in enumerate(label) if v > 0}
+    return render_template(
+        "edit.html", key=key, genes=genes, label_options=SORTED_LABELS, root=ROOT
+    )
+
+
+def _dense_label(genes):
+    if not isinstance(genes, dict) or not genes or len(genes) > 50:
+        abort(400)
+    label = np.zeros((1, config.VOCAB_SIZE))
+    for index, weight in genes.items():
+        try:
+            i = int(index)
+        except (TypeError, ValueError):
+            abort(400)
+        if not (0 <= i < config.VOCAB_SIZE):
+            abort(400)
+        if not isinstance(weight, (int, float)) or not math.isfinite(weight):
+            abort(400)
+        label[0, i] = min(max(float(weight), 0.0), 1.0)
+    total = label.sum()
+    if total <= 0:
+        abort(400)
+    label /= total
+    return label
+
+
+@app.post("/generate_image")
+def generate_image():
+    body = request.get_json(silent=True)
+    if not isinstance(body, dict):
+        abort(400)
+    label = _dense_label(body.get("label"))
+    key = body.get("key")
+    if key:
+        row = db.get_by_key(key)
+        if not row:
+            abort(404)
+        vector = np.asarray(json.loads(row["vector"]), dtype="float64")[None, :]
+        parent1 = row["id"]
+    else:
+        vector = gan.truncated_z_sample(1)
+        parent1 = None
+    ims = gan.sample(vector, label)
+    keys = store.store(ims, vector, label, parent1=parent1)
+    return jsonify({"key": keys[0]})
 
 
 @app.get("/mix")
@@ -108,8 +172,9 @@ def mix_images():
     l2 = np.asarray(json.loads(img2["label"]), dtype="float64")
     new_vectors, new_labels = gan.interpolate(config.NUM_CHILDREN, v1, v2, l1, l2)
     ims = gan.sample(new_vectors, new_labels)
-    keys = store.store(ims, new_vectors, new_labels,
-                       parent1=img1["id"], parent2=img2["id"])
+    keys = store.store(
+        ims, new_vectors, new_labels, parent1=img1["id"], parent2=img2["id"]
+    )
     return jsonify([{"key": k} for k in keys])
 
 
