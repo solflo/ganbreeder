@@ -12,11 +12,11 @@
 }
 
 .gene_name {
-    flex: 0 0 200px;
+    flex: 1 2 100px;
 }
 
 .gene_row input[type=range] {
-    flex: 1;
+    flex: 1 2 20px;
 }
 
 .gene_weight {
