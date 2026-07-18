@@ -63,7 +63,11 @@ search.addEventListener('focus', () => {
     filter()
     dropdown.style.display = ''
 })
-search.addEventListener('input', filter)
+// search.addEventListener('input', filter)
+search.addEventListener('input', () => {
+    filter()
+    dropdown.style.display = ''
+})
 search.addEventListener('blur', () => setTimeout(() => (dropdown.style.display = 'none'), 120))
 
 generate.addEventListener('click', () => {
