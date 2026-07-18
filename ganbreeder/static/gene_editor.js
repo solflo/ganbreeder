@@ -59,7 +59,8 @@ options.forEach(li => li.addEventListener('mousedown', event => {
     dropdown.style.display = 'none'
 }))
 
-search.addEventListener('focus', () => {
+
+search.addEventListener('click', () => {
     filter()
     dropdown.style.display = ''
 })
