@@ -18,13 +18,17 @@
 
     <div class="gene_editor">
         <div id="gene_rows"></div>
-        <div class="combobox">
-            <input id="label_search" placeholder="Search labels..." autocomplete="off">
-            <ul id="label_dropdown" style="display:none">
-                {% for i, name in label_options %}
-                <li data-index="{{ i }}">{{ name }}</li>
-                {% endfor %}
-            </ul>
+            <div class="combobox">
+                <div id="gene_add">
+                    <input id="label_search" placeholder="Search labels..." autocomplete="off">
+                    <button id="random_gene">Random</button>
+                </div>
+                <ul id="label_dropdown" style="display:none">
+                    {% for i, name in label_options %}
+                    <li data-index="{{ i }}">{{ name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>            
         </div>
         <button class="submit" id="generate" disabled>Generate</button>
     </div>

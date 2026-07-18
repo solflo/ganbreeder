@@ -38,9 +38,11 @@
     color: var(--text);
 }
 
+
+/* gene search */
+
 #label_search {
     padding: 0.25em;
-    margin-top: 1em;
     width: 100%;
     box-sizing: border-box;
 }
@@ -68,6 +70,23 @@
 #label_dropdown li[hidden] {
     display: none;
 }
+
+/* add random gene */
+
+#gene_add {
+    margin-top: 1em;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+    align-items: stretch;
+}
+
+#random_gene {
+    cursor: pointer;
+    width: content;
+}
+
+
 
 /* image output */
 #result {
