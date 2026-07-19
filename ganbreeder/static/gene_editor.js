@@ -13,10 +13,12 @@ const used = (index) => !!rows.querySelector(`.gene_row[data-index="${index}"]`)
 
 function refresh() {
     let total = 0
-    rows.querySelectorAll('.gene_slider').forEach(s => total += Number(s.value))
+    rows.querySelectorAll('.gene_slider').forEach(s => total += Math.abs(Number(s.value)))
     rows.querySelectorAll('.gene_row').forEach(row => {
         const w = Number(row.querySelector('.gene_slider').value)
-        row.querySelector('.gene_percent').textContent = total > 0 ? `${(w / total * 100).toFixed(1)}%` : '—'
+        const percent = row.querySelector('.gene_percent')
+        percent.textContent = total > 0 ? `${(w / total * 100).toFixed(1)}%` : '—'
+        percent.classList.toggle('negative', w < 0)
     })
     generate.disabled = total <= 0
 }
@@ -34,7 +36,7 @@ function add_row(index, name, weight) {
         refresh()
     })
     number.addEventListener('input', () => {
-        slider.value = Math.min(Math.max(Number(number.value) || 0, 0), 100) / 100
+        slider.value = Math.min(Math.max(Number(number.value) || 0, -100), 100) / 100
         refresh()
     })
     row.querySelector('.gene_remove').addEventListener('click', () => {
@@ -58,6 +60,16 @@ options.forEach(li => li.addEventListener('mousedown', event => {
     search.value = ''
     dropdown.style.display = 'none'
 }))
+
+const random_gene = document.getElementById('random_gene')
+random_gene.addEventListener('click', () => {
+    const pool = options.filter(li => !used(li.dataset.index))
+    if (pool.length === 0) return
+    const li = pool[Math.floor(Math.random() * pool.length)]
+    add_row(li.dataset.index, li.textContent, 0.5)
+    search.value = ''
+    dropdown.style.display = 'none'
+})
 
 
 search.addEventListener('click', () => {
