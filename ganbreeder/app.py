@@ -71,7 +71,7 @@ def edit_page():
     if not row:
         abort(404)
     label = json.loads(row["label"])
-    genes = {i: v for i, v in enumerate(label) if v > 0}
+    genes = {i: v for i, v in enumerate(label) if v != 0}
     return render_template(
         "edit.html", key=key, genes=genes, label_options=SORTED_LABELS, root=ROOT
     )
@@ -90,8 +90,8 @@ def _dense_label(genes):
             abort(400)
         if not isinstance(weight, (int, float)) or not math.isfinite(weight):
             abort(400)
-        label[0, i] = min(max(float(weight), 0.0), 1.0)
-    total = label.sum()
+        label[0, i] = min(max(float(weight), -1.0), 1.0)
+    total = np.abs(label).sum()
     if total <= 0:
         abort(400)
     label /= total

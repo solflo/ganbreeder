@@ -29,6 +29,10 @@
     color: var(--accent);
 }
 
+.gene_percent.negative {
+    color: #d9534f;
+}
+
 .gene_remove {
     cursor: pointer;
     border: none;
