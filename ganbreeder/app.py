@@ -98,12 +98,39 @@ def _dense_label(genes):
     return label
 
 
+def _flag(value):
+    if value is None:
+        return False
+    if not isinstance(value, bool):
+        abort(400)
+    return value
+
+
+def _unit(value):
+    if value is None:
+        return config.VARIATION
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        abort(400)
+    if not math.isfinite(value) or not 0 <= value <= 1:
+        abort(400)
+    return float(value)
+
+
+def _dimension(value):
+    if not isinstance(value, int) or isinstance(value, bool):
+        abort(400)
+    if value < config.BASE_SIZE or value % config.PIXELS_PER_CELL:
+        abort(400)
+    return value
+
+
 @app.post("/generate_image")
 def generate_image():
     body = request.get_json(silent=True)
     if not isinstance(body, dict):
         abort(400)
     label = _dense_label(body.get("label"))
+    tile = _flag(body.get("tile"))
     key = body.get("key")
     if key:
         row = db.get_by_key(key)
@@ -114,9 +141,51 @@ def generate_image():
     else:
         vector = gan.truncated_z_sample(1)
         parent1 = None
-    ims = gan.sample(vector, label)
+    ims = gan.sample(vector, label, tile=tile)
     keys = store.store(ims, vector, label, parent1=parent1)
     return jsonify({"key": keys[0]})
+
+
+@app.get("/expand")
+def expand_page():
+    return render_template(
+        "expand.html",
+        key=request.args.get("k", ""),
+        base=config.BASE_SIZE,
+        step=config.PIXELS_PER_CELL,
+        max_pixels=config.MAX_RENDER_PIXELS,
+        variation=config.VARIATION,
+        root=ROOT,
+    )
+
+
+@app.post("/expand_image")
+def expand_image():
+    body = request.get_json(silent=True)
+    if not isinstance(body, dict):
+        abort(400)
+    key = body.get("key")
+    row = key and db.get_by_key(key)
+    if not row:
+        abort(404)
+    width = _dimension(body.get("width"))
+    height = _dimension(body.get("height"))
+    if width * height > config.MAX_RENDER_PIXELS:
+        abort(400)
+    vector = np.asarray(json.loads(row["vector"]), dtype="float64")[None, :]
+    label = np.asarray(json.loads(row["label"]), dtype="float64")[None, :]
+    grid = (width // config.PIXELS_PER_CELL, height // config.PIXELS_PER_CELL)
+    ims = gan.sample(
+        vector,
+        label,
+        tile=_flag(body.get("tile")),
+        grid=grid,
+        variation=_unit(body.get("variation")),
+    )
+    # parent2 marks this as a render rather than a bred child, keeping it out of
+    # the source image's children grid while preserving lineage.
+    keys = store.store(ims, vector, label, parent1=row["id"], parent2=row["id"])
+    return jsonify({"key": keys[0], "width": width, "height": height})
 
 
 @app.get("/mix")

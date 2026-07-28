@@ -3,6 +3,7 @@ const search = document.getElementById('label_search')
 const rows = document.getElementById('gene_rows')
 const template = document.getElementById('gene_row_template')
 const generate = document.getElementById('generate')
+const seamless = document.getElementById('seamless')
 const loading = document.getElementById('loading_container')
 const result = document.getElementById('result')
 const result_link = result.querySelector('.imglink')
@@ -88,7 +89,8 @@ generate.addEventListener('click', () => {
     rows.querySelectorAll('.gene_row').forEach(row => {
         label[row.dataset.index] = Number(row.querySelector('.gene_slider').value)
     })
-    const payload = key ? { label, key } : { label }
+    const payload = { label, tile: seamless.checked }
+    if (key) payload.key = key
     loading.style.display = ''
     result.style.display = 'none'
     generate.disabled = true
