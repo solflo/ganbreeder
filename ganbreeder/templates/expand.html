@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+    <title>Ganbreeder</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link href="/index.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1><a href='/'>Ganbreeder</a></h1>
+        <p>Re-render an image's genes at another size or aspect ratio</p>
+        <nav><a href="/starred">Starred</a></nav>
+    </header>
+
+    <div class="expand_form">
+        <input id="source_url" type="text" placeholder="Enter url" required>
+        <img id="source_image">
+
+        <div class="presets">
+            <button type="button" data-width="512" data-height="256">512 x 256</button>
+            <button type="button" data-width="768" data-height="256">768 x 256</button>
+            <button type="button" data-width="256" data-height="512">256 x 512</button>
+            <button type="button" data-width="256" data-height="768">256 x 768</button>
+            <button type="button" data-width="512" data-height="512">512 x 512</button>
+            <button type="button" data-width="768" data-height="768">768 x 768</button>
+        </div>
+
+        <div class="size">
+            <label>width <input id="width" type="number" min="{{ base }}" step="{{ step }}" value="512"></label>
+            <label>height <input id="height" type="number" min="{{ base }}" step="{{ step }}" value="256"></label>
+        </div>
+
+        <div class="size">
+            <label>variation <input id="variation" type="number" min="0" max="1" step="0.05" value="{{ variation }}"></label>
+        </div>
+
+        <label class="option"><input type="checkbox" id="seamless"> Seamless tiling</label>
+        <button class="submit" id="render">Render</button>
+    </div>
+
+    <div id="loading_container" style="display:none">
+        <img class="loading" src="/image/loading.gif" style="width:50%;">
+        <p>Rendering</p>
+    </div>
+
+    <div id="result" style="display:none">
+        <img>
+        <p><a class="permalink">Image page</a> | <a class="download" download>Download</a></p>
+    </div>
+
+
+    <script>
+        const root = "{{ root }}";
+        const prefill_key = "{{ key }}";
+        const base = {{ base }};
+        const step = {{ step }};
+        const max_pixels = {{ max_pixels }};
+    </script>
+    <script src="/utils.js"></script>
+    <script src="/expand.js"></script>
+</body>
+</html>
