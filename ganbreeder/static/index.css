@@ -98,12 +98,12 @@ button.submit:disabled {
     gap: 1em;
 }
 
-.image_container img {
+.image_container img, #result img {
     max-width: 100%;
     border: 1px solid var(--accent);
 }
 
-.image_container img:hover {
+.image_container img:hover, #result img:hover {
     border: 1px solid black;
 }
 
@@ -160,11 +160,6 @@ button.submit:disabled {
 
 #result, #result p {
     text-align: center;
-}
-
-#result img {
-    max-width: 100%;
-    border: 1px solid var(--accent);
 }
 
 

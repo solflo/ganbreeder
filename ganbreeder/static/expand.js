@@ -9,7 +9,6 @@ const loading = document.getElementById('loading_container')
 const result = document.getElementById('result')
 const result_img = result.querySelector('img')
 const permalink = result.querySelector('.permalink')
-const download_link = result.querySelector('.download')
 
 const get_key = (url) => new URLSearchParams(new URL(url, location.origin).search).get('k')
 const snap = (input) => Math.max(base, Math.round(Number(input.value) / step) * step)
@@ -50,8 +49,6 @@ render.addEventListener('click', () => {
         loading.style.display = 'none'
         result_img.src = src
         permalink.href = '/i?k=' + data.key
-        download_link.href = src
-        download_link.download = `ganbreeder-${data.key}.jpeg`
         result.style.display = ''
         render.disabled = false
     }).catch(err => {
