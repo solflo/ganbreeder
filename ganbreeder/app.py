@@ -198,6 +198,11 @@ def starred_page():
     return render_template("starred.html", root=ROOT)
 
 
+@app.get("/genes")
+def ref_page():
+    return render_template("genes.html", root=ROOT)
+
+
 @app.get("/latest")
 def latest_page():
     page = request.args.get("page", 0, type=int)
