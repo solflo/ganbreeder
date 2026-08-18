@@ -100,6 +100,8 @@ button.submit:disabled {
 
 .image_container img, #result img {
     max-width: 100%;
+    max-height: 211px;  /* ugh hate to hardcode... */   
+    object-fit: scale-down;
     border: 1px solid var(--accent);
 }
 
